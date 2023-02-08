@@ -104,14 +104,16 @@ function createNFTVehicleSC(req,fn){
 	var receiptG;
 	var receipt;
 	contractABI = getContainFile('./nftVehicles/VehicleNFT.abi');	
-	contractByteCode = contractABI.evm.bytecode.object;
-	//contractByteCode = getContainFile('./nftVehicles/VehicleNFT.bytecode');
+	//contractABI = require('./nftVehicles/VehicleNFT.abi');
+	//contractByteCode = contractABI.evm.bytecode.object;
+	contractByteCode = getContainFile('./nftVehicles/VehicleNFT.bytecode');
 	//contractABI = contracts.userSol.User.abi; //it depends of the Contract name
 	//contractByteCode = contracts.userSol.User.evm.bytecode.object; //it depends of the Contract name
+	contractByteCodeObj = contractByteCode.object;
 
 	//sA = req.body.S;
 	//tA = req.body.T;
-	keyR = req.body.keyR; // keyR = "0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e";
+	from = req.body.from; // from = "0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e";
 	//data = req.body.data; //obtaining public key account
 	//tuA = req.body.Tu;
 	//toA = req.body.To;
@@ -125,28 +127,27 @@ function createNFTVehicleSC(req,fn){
 		var Web3 = require('web3');
 		var web3 = new Web3(Web3.givenProvider || blockchainAddress);
 		userContract = new web3.eth.Contract(contractABI);
-    	userContract.deploy({data: contractByteCode, arguments: [name_, symbol,data_]})
-			.send({from: keyR, gas: gas}, function(err, transactionHash){
-	    		if(err){
-	    			console.log("Entré pero hay error");
-        			receiptG = "error";
-					fn(receiptG);
-	    		}
-	    	})
-	    	.on('receipt', function(receipt){
-    			console.log("Entré no hay error");
-    			var y={
-					addTran:receipt.transactionHash,
-					addCont:receipt.contractAddress
-				};
-	     		receiptG = y;
-	     		console.log(receiptG);
-	     		fn(receiptG);
-	     }).on('error', function(error, receipt) {
-	     		console.log(error);
-				receiptG = "error";
-				fn(receiptG);
-	     	});
+    	userContract.deploy({data: contractByteCodeObj, arguments: 
+			[name_, symbol,data_]}).send({from: from, gas: gas}).on('receipt', 
+				function(receipt){
+    				console.log("Entré no hay error");
+    				var y={	
+						Result: "Success",
+						transactionHash:receipt.transactionHash,
+						contractAddress:receipt.contractAddress,
+						gasUsed:receipt.gasUsed,
+						blockNumber:receipt.blockNumber,
+						blockHash:receipt.blockHash
+					};
+	     			receiptG = y;
+	     			console.log(receipt);
+	     			fn(receiptG);
+	     		}).on('error', 
+					function(error, receipt) {
+	     				console.log(error);
+						receiptG = "error";
+						fn(receiptG);
+	     			});
 	}catch(err){
 		console.log(err);
 		resultado = 60;
@@ -175,16 +176,13 @@ deploy=function(req,fn){
 			if(resul=="error"){
 				y="Error";
 				obj={
-						To:req.body.To,
+						Result: "Error",
+						from:req.body.from,
 						Atr:y,
 						Asc:y
 					};
 			}else{
-				obj={
-							To:req.body.To,
-							Atr: resul.addTran,
-							Asc: resul.addCont
-						};
+				obj=resul;
 			}
 			fn(obj);
 		});
@@ -200,10 +198,10 @@ initializer.createNFTVehicle = function (req, res){
 	var idtoken = req.body.idtoken;
 	var data = req.body.data;
 	var role = req.body.role;	
-	var To = req.body.To;	
+	var from = req.body.from;	
 	var keyR = req.body.keyR;	
 	//It is required that role is the manufacturer
-	var resul;
+	var resul = {Result: "Success"};
 	if(role=="Manufacturer"){
 		//It is required that all variables contain values (not empty)
 		var obj={body:
@@ -214,7 +212,7 @@ initializer.createNFTVehicle = function (req, res){
 				idtoken:idtoken,
 				data:data,
 				role:role,
-				To:To,
+				from:from,
 				keyR:keyR
 			}};
 		var errNum = errorControl.someFieldIsEmpty(obj);
@@ -223,11 +221,10 @@ initializer.createNFTVehicle = function (req, res){
 				Result: "Error",
 				Num: errNum,
 				Description : errorControl.errors(errNum)
-			}
+			}		
 		}else{
-			deploy(obj,function(resulBack){
-				//res.send(resul);
-				resul = resulBack;
+			deploy(obj,function(resul){ // this function is async							
+				res.send(resul); //because of that this line is required
 			});			
 		}
 	}else{
@@ -235,9 +232,11 @@ initializer.createNFTVehicle = function (req, res){
 			Result: "Error",
 			Num: 0,
 			Description : errorControl.errors(0)
-		}
+		}		
 	}
-	res.send(resul);
+	if(resul.Result=="Error"){
+		res.send(resul);
+	}
 }
 
 
