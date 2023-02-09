@@ -1,92 +1,9 @@
 var errorControl = require('./errors');
 //var blockchainAddress = "ws://host.docker.internal:7545";
 //var blockchainAddress = "ws://host.docker.internal:8545";
-var blockchainAddress = "ws://172.18.1.3:8546";
+var blockchainAddress = "ws://172.18.1.2:8546";
 var initializer = {};
 
-
-/*
-
-function getContractObject(contractNameSol){
-	var compiler = require('solc');
-	const fs = require('fs');
-	const userSol = contractNameSol;
-	sourceCode = fs.readFileSync(userSol, 'UTF8').toString();
-	const path = require('path');
-	const solc = require('solc');
-	const roo = path.resolve('', '', userSol);
-	//console.log(roo);
-	const source = fs.readFileSync(roo, 'UTF-8');
-	var input = {
-	    language: 'Solidity',
-	    sources: {
-	        userSol : {
-	            content: source
-	        }
-	    },
-	    settings: {
-	        outputSelection: {
-	            '*': {
-	                '*': [ '*' ]
-	            }
-	        }
-	    }
-	};
-	compiledCode = JSON.parse(solc.compile(JSON.stringify(input)));
-	//console.log(compiledCode);
-	return compiledCode.contracts;
-}
-
-function createNFTVehicleSC(req,fn){
-	console.log("OK");
-	var receiptG;
-	contracts = getContractObject('UserEvents.sol');
-	avoContract = contracts.userSol.User.abi; //it depends of the Contract name
-	byteCodeRoot = contracts.userSol.User.evm.bytecode.object; //it depends of the Contract name
-
-	sA = req.body.S;
-	tA = req.body.T;
-	keyR = req.body.keyR;
-	data = req.body.data; //obtaining public key account
-	tuA = req.body.Tu;
-	toA = req.body.To;
-	gas = req.body.gas;
-	console.log(gas);
-	var resultado = 0;
-	try{
-		var Web3 = require('web3');
-		var web3 = new Web3(Web3.givenProvider || blockchainAddress);
-		userContract = new web3.eth.Contract(avoContract);
-    	userContract.deploy({data: byteCodeRoot, arguments: [keyR, tuA,sA,tA,toA,data]}).send({from: keyR, gas: gas
-	    	}, function(err, transactionHash){
-	    		if(err){
-	    			console.log("Entré pero hay error");
-        			receiptG = "error";
-							fn(receiptG);
-	    		}
-	    	})
-	    	.on('receipt', function(receipt){
-    			console.log("Entré no hay error");
-    			var y={
-					addTran:receipt.transactionHash,
-					addCont:receipt.contractAddress
-				};
-	     		receiptG = y;
-	     		console.log(receiptG);
-	     		fn(receiptG);
-	     }).on('error', function(error, receipt) {
-	     		console.log(error);
-				receiptG = "error";
-				fn(receiptG);
-	     	});
-	}catch(err){
-		resultado = 60;
-		receiptG = "error";
-		fn(receiptG);
-	}
-}
-
-*/
 
 function getContainFile(fileName){	
 	const fs = require('fs');	
@@ -104,19 +21,11 @@ function createNFTVehicleSC(req,fn){
 	var receiptG;
 	var receipt;
 	contractABI = getContainFile('./nftVehicles/VehicleNFT.abi');	
-	//contractABI = require('./nftVehicles/VehicleNFT.abi');
-	//contractByteCode = contractABI.evm.bytecode.object;
-	contractByteCode = getContainFile('./nftVehicles/VehicleNFT.bytecode');
-	//contractABI = contracts.userSol.User.abi; //it depends of the Contract name
-	//contractByteCode = contracts.userSol.User.evm.bytecode.object; //it depends of the Contract name
+	//contractABI = require('./nftVehicles/VehicleNFT.abi');	
+	contractByteCode = getContainFile('./nftVehicles/VehicleNFT.bytecode');	
 	contractByteCodeObj = contractByteCode.object;
 
-	//sA = req.body.S;
-	//tA = req.body.T;
 	from = req.body.from; // from = "0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e";
-	//data = req.body.data; //obtaining public key account
-	//tuA = req.body.Tu;
-	//toA = req.body.To;
 	name_=req.body.name; // name_="CX5";
 	symbol=req.body.symbol; // symbol="CX5S";
 	data_=req.body.data;  //data_="CX5S_data";
@@ -156,19 +65,6 @@ function createNFTVehicleSC(req,fn){
 	}
 }
 
-/*
-function createNFTVehicleSC(req,fn){
-	var y={
-		addTran:"receipt.transactionHash",
-		addCont:"receipt.contractAddress"
-	};
-	 receiptG = y;
-	 console.log(receiptG);
-	 fn(receiptG);
-}
-*/
-
-
 deploy=function(req,fn){
 	//It creates a smart contract
 	var obj;
@@ -189,6 +85,26 @@ deploy=function(req,fn){
 
 }
 
+// this function must be remote, but it will be local for now
+getRole = function(key){
+	var role="Not determined";
+	switch(key){
+		case "0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e": role = "Manufacturer"; break;
+		default: role = "Not determined"; break; 
+	}
+	return role;
+}
+
+// this function must be remote, but it will be local for now
+tokenValid = function(idToken){
+	var result;
+	switch(idToken){
+		case "1FMADSFJL2432SDKFJA": result = "Yes"; break;
+		default: result = "Not"; break;
+	}
+	return result;
+}
+
 
 
 initializer.createNFTVehicle = function (req, res){
@@ -197,12 +113,14 @@ initializer.createNFTVehicle = function (req, res){
 	var symbol = req.body.symbol;
 	var idtoken = req.body.idtoken;
 	var data = req.body.data;
-	var role = req.body.role;	
+	//var role = req.body.role;	
 	var from = req.body.from;	
-	var keyR = req.body.keyR;	
-	//It is required that role is the manufacturer
+	//var keyR = req.body.keyR;	
 	var resul = {Result: "Success"};
-	if(role=="Manufacturer"){
+	var role = getRole(from);  //this function must be changed when Users Microservice is implemented
+	var validToken = tokenValid(idtoken);  //this function must be changed when Users Microservice is implemented
+	//It is required that role is the manufacturer
+	if(role==="Manufacturer" && validToken==="Yes"){
 		//It is required that all variables contain values (not empty)
 		var obj={body:
 			{
@@ -212,8 +130,8 @@ initializer.createNFTVehicle = function (req, res){
 				idtoken:idtoken,
 				data:data,
 				role:role,
-				from:from,
-				keyR:keyR
+				from:from
+				//keyR:keyR
 			}};
 		var errNum = errorControl.someFieldIsEmpty(obj);
 		if(errNum){  //				
@@ -239,12 +157,13 @@ initializer.createNFTVehicle = function (req, res){
 	}
 }
 
-
+/*
 initializer.default = function (req, res){
 	var obj = {
 		output: "This is the create service"
 	};
 	res.send(obj);
 }
+*/
 
 module.exports = initializer;

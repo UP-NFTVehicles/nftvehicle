@@ -2,7 +2,7 @@ var initializer = {};
 
 initializer.errors = function(numError){
     let resultError=[];
-    resultError[0]="ERROR: It is required to me a manufacturer";
+    resultError[0]="ERROR: It is required to be a manufacturer or a token valid";
     resultError[1]="ERROR: It must not contain empty values";
     return resultError[numError];
 }
