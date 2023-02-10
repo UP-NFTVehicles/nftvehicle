@@ -4,10 +4,12 @@
 
 ## Pre-requirements
   It is required create a network in docker as follows:
+
     $ docker network create --gateway 172.18.1.1 --subnet 172.18.1.0/24 nftvehicleNetwork
  
 ## Install process
   Using the Dockerfile located in this repository, execute the following steps:
+
     * Download this repository in a path in your computer, so-called PATHL
     * Download ubuntu image:
       $ docker pull ubuntu
