@@ -6,6 +6,7 @@ initializer.errors = function(numError){
     resultError[1]="ERROR: It must not contain empty values";
     resultError[2]="ERROR: It is not possible to establish connection with blockchain network";
     resultError[3]="ERROR: It is not possible to deploy the contract";
+    resultError[4]="ERROR: It is not possible to find the method";
     return resultError[numError];
 }
 

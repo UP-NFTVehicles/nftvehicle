@@ -77,6 +77,7 @@ async function createNFTVehicleSC(req,fn){
 	}
 }
 
+/*
 deploy=function(req,fn){
 	//It creates a smart contract
 	var obj;
@@ -85,6 +86,8 @@ deploy=function(req,fn){
 		});
 
 }
+*/
+
 
 // this function must be remote, but it will be local for now
 getRole = function(key){
@@ -162,13 +165,6 @@ initializer.createNFTVehicle = function (req, res){
 	}
 }
 
-/*
-initializer.default = function (req, res){
-	var obj = {
-		output: "This is the create service"
-	};
-	res.send(obj);
-}
-*/
+
 
 module.exports = initializer;
