@@ -31,9 +31,3 @@
     
     * Execute web server:
       $ ./startApp
-
-
-  ----
-   -api-gateway/
-   -ganache/
-   -manufacturer
