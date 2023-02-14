@@ -1,5 +1,4 @@
 var errorControl = require('./errors');
-var blockchainAddress = "ws://172.18.1.3:8546";
 var initializer = {};
 
 
@@ -16,11 +15,12 @@ function getContainFile(fileName){
 
 async function callNFTVehicleSC(req,fn){
 	console.log("OK");
-	contractABI = getContainFile('./nftVehicles/VehicleNFT.abi');	
-	contractByteCode = getContainFile('./nftVehicles/VehicleNFT.bytecode');	
+	contractABI = getContainFile(contractABIPath);	//contractABIPath is a global variable
+	contractByteCode = getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
 	contractByteCodeObj = contractByteCode.object;
     contractAdd = req.body.contractAdd; 
     publicMethod = req.body.publicMethod; 
+	from = req.body.from;
 	var resultado = 0;
 	var Web3 = require('web3');
 	const web3 = new Web3(Web3.givenProvider || blockchainAddress);
@@ -28,13 +28,14 @@ async function callNFTVehicleSC(req,fn){
 		await web3.eth.net.isListening();
 		console.log('Connected!');
 		userContract = new web3.eth.Contract(contractABI,contractAdd);
-        console.log(userContract);
+        console.log(from);
         try {
-            userContract.methods[publicMethod]().call().then(function(result) {
+            userContract.methods[publicMethod]().call({from:from}).then(function(result) {
                 console.log(result);
                 fn(result);
               });
         } catch (error) {
+			console.log(error);
             errNum = 4; 
             resul = {
                 Result: "Error",
@@ -55,6 +56,7 @@ async function callNFTVehicleSC(req,fn){
 	}
 }
 
+/*
 // this function must be remote, but it will be local for now
 getRole = function(key){
 	var role="Not determined";
@@ -74,12 +76,13 @@ tokenValid = function(idToken){
 	}
 	return result;
 }
-
+*/
 
 //this is for public functions
 initializer.consultNFTVehicle = function (req, res){
     var contractAdd = req.body.contractAdd;	
     var publicMethod = req.body.publicMethod;
+	var from = req.body.from;
 	var resul = {Result: "Success"};
 		var obj={body:
 			{

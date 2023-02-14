@@ -8,10 +8,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var createRouter = require('./routes/create');
 var consultRouter = require('./routes/consult');
-
-
+var mintRouter = require('./routes/mint');
 
 var app = express();
+
+//establishing a global variable
+global.blockchainAddress = "ws://172.18.1.2:8546";
+global.contractABIPath = "./nftVehicles/VehicleNFT.abi";
+global.contractByteCodePath = "./nftVehicles/VehicleNFT.bytecode";
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +31,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/create', createRouter);
 app.use('/consultInfo', consultRouter);
+app.use('/mint', mintRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

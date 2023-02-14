@@ -2,7 +2,7 @@
 var errorControl = require('./errors');
 //var blockchainAddress = "ws://host.docker.internal:7545";
 //var blockchainAddress = "ws://host.docker.internal:8545";
-var blockchainAddress = "ws://172.18.1.3:8546";
+//var blockchainAddress = "ws://172.18.1.3:8546";
 var initializer = {};
 
 
@@ -21,9 +21,8 @@ async function createNFTVehicleSC(req,fn){
 	console.log("OK");
 	var receiptG;
 	var receipt;
-	contractABI = getContainFile('./nftVehicles/VehicleNFT.abi');	
-	//contractABI = require('./nftVehicles/VehicleNFT.abi');	
-	contractByteCode = getContainFile('./nftVehicles/VehicleNFT.bytecode');	
+	contractABI = getContainFile(contractABIPath);	//contractABIPath is a global variable
+	contractByteCode = getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
 	contractByteCodeObj = contractByteCode.object;
 
 	from = req.body.from; // from = "0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e";
@@ -35,6 +34,7 @@ async function createNFTVehicleSC(req,fn){
 	var resultado = 0;
 	var Web3 = require('web3');
 	//try{
+	console.log(blockchainAddress);
 	const web3 = new Web3(Web3.givenProvider || blockchainAddress);
 	try {
 		await web3.eth.net.isListening();
@@ -57,11 +57,12 @@ async function createNFTVehicleSC(req,fn){
 						 fn(receiptG);
 					 }).on('error', 
 						function(error, receipt) {
-							errNum = 2; //it is assigned in the /controller/errors.js
+							console.log(error);
+							errNum = 3; //it is assigned in the /controller/errors.js
 							resul = {
 								Result: "Error",
 								Num: errNum,
-								Description : errorControl.errors(errNum)
+								Description : errorControl.errors(errNum) + " or " + errorControl.errors(5)
 							}		
 							fn(resul);
 											 });
@@ -115,14 +116,14 @@ initializer.createNFTVehicle = function (req, res){
 	var gas = req.body.gas;
 	var name = req.body.name;
 	var symbol = req.body.symbol;
-	var idtoken = req.body.idtoken;
+	var token = req.body.token;
 	var data = req.body.data;
 	//var role = req.body.role;	
 	var from = req.body.from;	
 	//var keyR = req.body.keyR;	
 	var resul = {Result: "Success"};
 	var role = getRole(from);  //this function must be changed when Users Microservice is implemented
-	var validToken = tokenValid(idtoken);  //this function must be changed when Users Microservice is implemented
+	var validToken = tokenValid(token);  //this function must be changed when Users Microservice is implemented
 	//It is required that role is the manufacturer
 	if(role==="Manufacturer" && validToken==="Yes"){
 		//It is required that all variables contain values (not empty)
@@ -131,7 +132,7 @@ initializer.createNFTVehicle = function (req, res){
 				gas:gas,
 				name:name,
 				symbol:symbol,
-				idtoken:idtoken,
+				token:token,
 				data:data,
 				role:role,
 				from:from

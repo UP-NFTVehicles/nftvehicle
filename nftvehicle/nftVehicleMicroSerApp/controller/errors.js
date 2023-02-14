@@ -7,6 +7,7 @@ initializer.errors = function(numError){
     resultError[2]="ERROR: It is not possible to establish connection with blockchain network";
     resultError[3]="ERROR: It is not possible to deploy the contract";
     resultError[4]="ERROR: It is not possible to find the method";
+    resultError[5]="ERROR: maybe our of gas";
     return resultError[numError];
 }
 
