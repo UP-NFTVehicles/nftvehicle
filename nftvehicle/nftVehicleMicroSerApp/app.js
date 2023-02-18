@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var createRouter = require('./routes/create');
 var consultRouter = require('./routes/consult');
 var mintRouter = require('./routes/mint');
+var requestORRouter = require('./routes/requestOwnerRight');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/users', usersRouter);
 app.use('/create', createRouter);
 app.use('/consultInfo', consultRouter);
 app.use('/mint', mintRouter);
+app.use('/requestOwnerRight', requestORRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -13,31 +13,40 @@ function getContainFile(fileName){
 }
 
 
-async function callNFTVehicleSC(req,fn){
+async function callingRequestOR(req,fn){
 	console.log("OK");
 	contractABI = getContainFile(contractABIPath);	//contractABIPath is a global variable
 	contractByteCode = getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
-	contractByteCodeObj = contractByteCode.object;
-	gas = req.body.gas;
-    contractAdd = req.body.contractAdd; 
-    publicMethod = req.body.publicMethod; 
-	from = req.body.from;
-	var resultado = 0;
+	contractByteCodeObj = contractByteCode.object;	
+	gas = req.body.gas; 
+	contractAdd=req.body.contractAdd;
+	const owner = req.body.owner;
+	tokenId = req.body.tokenId;	
 	var Web3 = require('web3');
 	const web3 = new Web3(Web3.givenProvider || blockchainAddress);
 	try {
 		await web3.eth.net.isListening();
 		console.log('Connected!');
 		userContract = new web3.eth.Contract(contractABI,contractAdd);
-        console.log(from);
-		console.log(gas);
         try {
-			//{from:from,gas:gas}
-            userContract.methods[publicMethod]().call().then(function(result) {				
-                console.log(result);
-                fn(result);
-              });
-        } catch (error) {
+/***************************************/
+			userContract.methods.requestOwnerright(tokenId).send({from: owner, gas:gas })
+			.on('transactionHash', function(hash){					
+				console.log("Transaction Hash: ", hash);
+			})
+			.on('receipt', function(receipt){
+				console.log("Transaction Receipt: ", receipt);
+				fn(receipt);
+			})
+			.on('confirmation', function(confirmationNumber, receipt){
+				console.log("Confirmation Number: ", confirmationNumber);
+			})
+			.on('error', function(error){
+				console.error(error);
+				fn(error);
+			});
+/***************************************/
+		} catch (error) {
 			console.log(error);
             errNum = 4; 
             resul = {
@@ -59,40 +68,20 @@ async function callNFTVehicleSC(req,fn){
 	}
 }
 
-/*
-// this function must be remote, but it will be local for now
-getRole = function(key){
-	var role="Not determined";
-	switch(key){
-		case "0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e": role = "Manufacturer"; break;
-		default: role = "Not determined"; break; 
-	}
-	return role;
-}
-
-// this function must be remote, but it will be local for now
-tokenValid = function(idToken){
-	var result;
-	switch(idToken){
-		case "1FMADSFJL2432SDKFJA": result = "Yes"; break;
-		default: result = "Not"; break;
-	}
-	return result;
-}
-*/
 
 //this is for public functions
-initializer.consultNFTVehicle = function (req, res){
-	var gas = req.body.gas;	
+initializer.requestOR = function (req, res){
+    var gas = req.body.gas;	
     var contractAdd = req.body.contractAdd;	
-    var publicMethod = req.body.publicMethod;
-	var from = req.body.from;
+    var owner = req.body.owner;        
+    var tokenId = req.body.tokenId;
 	var resul = {Result: "Success"};
-		var obj={body:
-			{	gas:gas,
-                contractAdd:contractAdd,
-                publicMethod: publicMethod,
-				from:from
+	var obj={body:
+			{
+                gas : req.body.gas, 
+                contractAdd:contractAdd,      
+                owner : owner,                                          
+                tokenId : tokenId            
 			}};
 		var errNum = errorControl.someFieldIsEmpty(obj);
 		if(errNum){  //				
@@ -102,7 +91,7 @@ initializer.consultNFTVehicle = function (req, res){
 				Description : errorControl.errors(errNum)
 			}		
 		}else{
-			callNFTVehicleSC(obj,function(resul){// this function is async
+			callingRequestOR(obj,function(resul){// this function is async
 				res.send(resul); //because of that this line is required
 			});
 		}
