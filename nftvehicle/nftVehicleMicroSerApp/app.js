@@ -16,6 +16,9 @@ var payToTheGovernmentRouter = require('./routes/payToTheGovernment');
 var setAgreedPriceRouter = require('./routes/setAgreedPrice');
 var pay4ThePurchaseRouter = require('./routes/pay4ThePurchase');
 var reportRouter = require('./routes/report');
+var requestChangeStolenStatusRouter = require('./routes/requestChangeStolenStatus');
+var setHelperRouter = require('./routes/setHelper');
+var setDetailsRouter = require('./routes/setDetails');
 
 
 var app = express();
@@ -47,6 +50,9 @@ app.use('/payToTheGovernment', payToTheGovernmentRouter);
 app.use('/setAgreedPrice', setAgreedPriceRouter);
 app.use('/pay4ThePurchase', pay4ThePurchaseRouter);
 app.use('/report', reportRouter);
+app.use('/requestChangeStolenStatus', requestChangeStolenStatusRouter);
+app.use('/setHelper', setHelperRouter);
+app.use('/setDetails', setDetailsRouter); //setInsuranceDetails and setMaintenanceDetails
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

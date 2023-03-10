@@ -3,7 +3,7 @@ var utilities = require('./utilities');
 var initializer = {};
 
 
-async function callingReport(req,method,fn){
+async function callingRequestOR(req,fn){
 	console.log("OK");
 	contractABI = utilities.getContainFile(contractABIPath);	//contractABIPath is a global variable
 	contractByteCode = utilities.getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
@@ -12,7 +12,6 @@ async function callingReport(req,method,fn){
 	contractAdd=req.body.contractAdd;
 	const legalOwner = req.body.legalOwner;
 	tokenId = req.body.tokenId;	
-    description = req.body.description;
 	var Web3 = require('web3');
 	const web3 = new Web3(Web3.givenProvider || blockchainAddress);
 	try {
@@ -21,7 +20,7 @@ async function callingReport(req,method,fn){
 		userContract = new web3.eth.Contract(contractABI,contractAdd);
         try {
 /***************************************/
-			userContract.methods[method](tokenId,description).send({from: legalOwner, gas:gas })
+			userContract.methods.requestChangeStolenStatus(tokenId).send({from: legalOwner, gas:gas })
 			.on('transactionHash', function(hash){					
 				console.log("Transaction Hash: ", hash);
 			})
@@ -61,20 +60,18 @@ async function callingReport(req,method,fn){
 
 
 //this is for public functions
-report = function (req, method, res){
+initializer.requestChangeStolenStatus = function (req, res){
     var gas = req.body.gas;	
     var contractAdd = req.body.contractAdd;	
     var legalOwner = req.body.legalOwner;
     var tokenId = req.body.tokenId;
-    var description = req.body.description;
 	var resul = {Result: "Success"};
 	var obj={body:
 			{
                 gas : req.body.gas, 
                 contractAdd:contractAdd,      
-                legalOwner : legalOwner,
-                tokenId : tokenId,
-                description : description   
+                legalOwner : legalOwner,                                          
+                tokenId : tokenId            
 			}};
 		var errNum = errorControl.someFieldIsEmpty(obj);
 		if(errNum){  //				
@@ -84,7 +81,7 @@ report = function (req, method, res){
 				Description : errorControl.errors(errNum)
 			}		
 		}else{
-			callingReport(obj,method,function(resul){// this function is async
+			callingRequestOR(obj,function(resul){// this function is async
 				res.send(resul); //because of that this line is required
 			});
 		}
@@ -92,14 +89,5 @@ report = function (req, method, res){
 		res.send(resul);
 	}
 }
-
-initializer.reportEndLifeCycle = function (req, res){
-    report(req,"reportEndLifeCycle",res);
-}
-
-initializer.reportAsStolen = function (req, res){
-    report(req,"reportAsStolen",res);
-}
-
 
 module.exports = initializer;
