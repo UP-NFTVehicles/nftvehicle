@@ -12,6 +12,10 @@ var mintRouter = require('./routes/mint');
 var requestORRouter = require('./routes/requestOwnerRight');
 var setCost4TransRouter = require('./routes/setCost4Trans');
 var payToTheGovernmentRouter = require('./routes/payToTheGovernment');
+//var reportEndLifeCycleRouter = require('./routes/reportEndLifeCycle');
+var setAgreedPriceRouter = require('./routes/setAgreedPrice');
+var pay4ThePurchaseRouter = require('./routes/pay4ThePurchase');
+var reportRouter = require('./routes/report');
 
 
 var app = express();
@@ -39,6 +43,10 @@ app.use('/mint', mintRouter);
 app.use('/requestOwnerRight', requestORRouter);
 app.use('/setCost4Trans', setCost4TransRouter);
 app.use('/payToTheGovernment', payToTheGovernmentRouter);
+//app.use('/reportEndLifeCycle', reportEndLifeCycleRouter);
+app.use('/setAgreedPrice', setAgreedPriceRouter);
+app.use('/pay4ThePurchase', pay4ThePurchaseRouter);
+app.use('/report', reportRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

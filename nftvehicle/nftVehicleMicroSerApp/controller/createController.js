@@ -1,28 +1,18 @@
 //const { isNull } = require('util');
 var errorControl = require('./errors');
+var utilities = require('./utilities');
 //var blockchainAddress = "ws://host.docker.internal:7545";
 //var blockchainAddress = "ws://host.docker.internal:8545";
 //var blockchainAddress = "ws://172.18.1.3:8546";
 var initializer = {};
 
 
-function getContainFile(fileName){	
-	const fs = require('fs');	
-	const nftVehSol = fileName;
-	const path = require('path');
-	const roo = path.resolve('', '', nftVehSol);
-	const source = fs.readFileSync(roo, 'UTF-8');
-	compiledCode = JSON.parse(source);
-	return compiledCode;
-}
-
-
 async function createNFTVehicleSC(req,fn){
 	console.log("OK");
 	var receiptG;
 	var receipt;
-	contractABI = getContainFile(contractABIPath);	//contractABIPath is a global variable
-	contractByteCode = getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
+	contractABI = utilities.getContainFile(contractABIPath);	//contractABIPath is a global variable
+	contractByteCode = utilities.getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
 	contractByteCodeObj = contractByteCode.object;
 
 	from = req.body.from; // from = "0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e";
@@ -94,7 +84,7 @@ deploy=function(req,fn){
 getRole = function(key){
 	var role="Not determined";
 	switch(key){
-		case "0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e": role = "Manufacturer"; break;
+		case "0x2CFcBB9Cf2910fBa7E7E7a8092aa1a40BC5BA341": role = "Manufacturer"; break;
 		default: role = "Not determined"; break; 
 	}
 	return role;

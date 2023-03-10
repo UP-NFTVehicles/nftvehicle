@@ -3,17 +3,18 @@ var utilities = require('./utilities');
 var initializer = {};
 
 
-async function callingSetCost4Trans(req,fn){
+async function callingSetAgreedPrice(req,fn){
 	console.log("OK");
 	contractABI = utilities.getContainFile(contractABIPath);	//contractABIPath is a global variable
 	contractByteCode = utilities.getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
 	contractByteCodeObj = contractByteCode.object;	
 	gas = req.body.gas; 
 	contractAdd=req.body.contractAdd;
-    transactionCost = req.body.transactionCost;
-    transactionType = req.body.transactionType;
+    const legalOwner = req.body.legalOwner;
+    priceProposal = req.body.priceProposal;
+    possibleLegalOwner = req.body.possibleLegalOwner;
     tokenId = req.body.tokenId;
-    const government = req.body.government;
+    transactionType = req.body.transactionType;	    
 	var Web3 = require('web3');
 	const web3 = new Web3(Web3.givenProvider || blockchainAddress);
 	try {
@@ -22,7 +23,7 @@ async function callingSetCost4Trans(req,fn){
 		userContract = new web3.eth.Contract(contractABI,contractAdd);
         try {
 /***************************************/
-			userContract.methods.setCostForTheTransaction(transactionCost,tokenId,transactionType).send({from: government, gas:gas })
+			userContract.methods.setAgreedPrice(priceProposal,possibleLegalOwner,tokenId,transactionType).send({from: legalOwner, gas:gas })
 			.on('transactionHash', function(hash){					
 				console.log("Transaction Hash: ", hash);
 			})
@@ -62,22 +63,24 @@ async function callingSetCost4Trans(req,fn){
 
 
 //this is for public functions
-initializer.setCost4Trans = function (req, res){
+initializer.setAgreedPrice = function (req, res){
     var gas = req.body.gas;	
     var contractAdd = req.body.contractAdd;	
-    var transactionCost = req.body.transactionCost;	
-    var transactionType = req.body.transactionType;	    
+    var legalOwner = req.body.legalOwner;
+    var priceProposal = req.body.priceProposal;
+    var possibleLegalOwner = req.body.possibleLegalOwner;
     var tokenId = req.body.tokenId;
-    var government = req.body.government;
+    var transactionType = req.body.transactionType;	    
 	var resul = {Result: "Success"};
 	var obj={body:
 			{
                 gas : req.body.gas, 
                 contractAdd:contractAdd,      
-                transactionCost:transactionCost,
-                transactionType:transactionType,
-                tokenId : tokenId,
-                government : government                                          
+                legalOwner : req.body.legalOwner,
+                priceProposal : req.body.priceProposal,
+                possibleLegalOwner : req.body.possibleLegalOwner,
+                tokenId : req.body.tokenId,
+                transactionType : req.body.transactionType
 			}};
 		var errNum = errorControl.someFieldIsEmpty(obj);
 		if(errNum){  //				
@@ -87,7 +90,7 @@ initializer.setCost4Trans = function (req, res){
 				Description : errorControl.errors(errNum)
 			}		
 		}else{
-			callingSetCost4Trans(obj,function(resul){// this function is async
+			callingSetAgreedPrice(obj,function(resul){// this function is async
 				res.send(resul); //because of that this line is required
 			});
 		}

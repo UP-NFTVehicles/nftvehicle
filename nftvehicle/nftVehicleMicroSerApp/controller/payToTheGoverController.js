@@ -1,22 +1,12 @@
 var errorControl = require('./errors');
+var utilities = require('./utilities');
 var initializer = {};
-
-
-function getContainFile(fileName){	
-	const fs = require('fs');	
-	const nftVehSol = fileName;
-	const path = require('path');
-	const roo = path.resolve('', '', nftVehSol);
-	const source = fs.readFileSync(roo, 'UTF-8');
-	compiledCode = JSON.parse(source);
-	return compiledCode;
-}
 
 
 async function callingpayToTheGover(req,fn){
 	console.log("OK");
-	contractABI = getContainFile(contractABIPath);	//contractABIPath is a global variable
-	contractByteCode = getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
+	contractABI = utilities.getContainFile(contractABIPath);	//contractABIPath is a global variable
+	contractByteCode = utilities.getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
 	contractByteCodeObj = contractByteCode.object;	
 	gas = req.body.gas; 
 	contractAdd=req.body.contractAdd;
@@ -24,7 +14,7 @@ async function callingpayToTheGover(req,fn){
     transactionType = req.body.transactionType;
     tokenId = req.body.tokenId;
     const government = req.body.government;
-    const manufacturer = req.body.manufacturer;
+    const owner = req.body.owner;
 	var Web3 = require('web3');
 	const web3 = new Web3(Web3.givenProvider || blockchainAddress);
 	try {
@@ -33,7 +23,7 @@ async function callingpayToTheGover(req,fn){
 		userContract = new web3.eth.Contract(contractABI,contractAdd);
         try {
 /***************************************/
-			userContract.methods.payToTheGovernment(government,tokenId,transactionType).send({from: manufacturer, gas:gas, value:value})
+			userContract.methods.payToTheGovernment(government,tokenId,transactionType).send({from: owner, gas:gas, value:value})
 			.on('transactionHash', function(hash){					
 				console.log("Transaction Hash: ", hash);
 			})
@@ -80,7 +70,7 @@ initializer.payToTheGover = function (req, res){
     var transactionType = req.body.transactionType;	    
     var tokenId = req.body.tokenId;
     var government = req.body.government;
-    var manufacturer = req.body.manufacturer;
+    var owner = req.body.owner;
 	var resul = {Result: "Success"};
 	var obj={body:
 			{
@@ -90,7 +80,7 @@ initializer.payToTheGover = function (req, res){
                 transactionType:transactionType,
                 tokenId : tokenId,
                 government : government,
-                manufacturer : manufacturer
+                owner : owner
 			}};
 		var errNum = errorControl.someFieldIsEmpty(obj);
 		if(errNum){  //				

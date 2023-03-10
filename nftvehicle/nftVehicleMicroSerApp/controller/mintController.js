@@ -1,22 +1,12 @@
 var errorControl = require('./errors');
+var utilities = require('./utilities');
 var initializer = {};
-
-
-function getContainFile(fileName){	
-	const fs = require('fs');	
-	const nftVehSol = fileName;
-	const path = require('path');
-	const roo = path.resolve('', '', nftVehSol);
-	const source = fs.readFileSync(roo, 'UTF-8');
-	compiledCode = JSON.parse(source);
-	return compiledCode;
-}
 
 
 async function callingMint(req,fn){
 	console.log("OK");
-	contractABI = getContainFile(contractABIPath);	//contractABIPath is a global variable
-	contractByteCode = getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
+	contractABI = utilities.getContainFile(contractABIPath);	//contractABIPath is a global variable
+	contractByteCode = utilities.getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
 	contractByteCodeObj = contractByteCode.object;	
 	gas = req.body.gas; 
 	contractAdd=req.body.contractAdd;
