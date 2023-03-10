@@ -19,6 +19,7 @@ var reportRouter = require('./routes/report');
 var requestChangeStolenStatusRouter = require('./routes/requestChangeStolenStatus');
 var setHelperRouter = require('./routes/setHelper');
 var setDetailsRouter = require('./routes/setDetails');
+var acceptHelperServiceRouter = require('./routes/acceptHelperService');
 
 
 var app = express();
@@ -53,6 +54,7 @@ app.use('/report', reportRouter);
 app.use('/requestChangeStolenStatus', requestChangeStolenStatusRouter);
 app.use('/setHelper', setHelperRouter);
 app.use('/setDetails', setDetailsRouter); //setInsuranceDetails and setMaintenanceDetails
+app.use('/acceptHelperService', acceptHelperServiceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

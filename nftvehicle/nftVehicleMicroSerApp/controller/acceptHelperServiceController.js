@@ -3,7 +3,7 @@ var utilities = require('./utilities');
 var initializer = {};
 
 
-async function callingSetHelper(req,fn){
+async function callingAcceptHelperService(req,fn){
 	console.log("OK");
 	contractABI = utilities.getContainFile(contractABIPath);	//contractABIPath is a global variable
 	contractByteCode = utilities.getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
@@ -12,9 +12,7 @@ async function callingSetHelper(req,fn){
 	contractAdd=req.body.contractAdd;
     const legalOwner = req.body.legalOwner;
     tokenId = req.body.tokenId;
-    const helper = req.body.helper;
-    typeHelper = req.body.typeHelper;
-    about = req.body.about;
+    var accept = req.body.accept;
 	var Web3 = require('web3');
 	const web3 = new Web3(Web3.givenProvider || blockchainAddress);
 	try {
@@ -23,7 +21,7 @@ async function callingSetHelper(req,fn){
 		userContract = new web3.eth.Contract(contractABI,contractAdd);
         try {
 /***************************************/
-			userContract.methods.setHelper(tokenId,helper,about,typeHelper).send({from: legalOwner, gas:gas })
+			userContract.methods.acceptHelperService(tokenId,accept).send({from: legalOwner, gas:gas })
 			.on('transactionHash', function(hash){					
 				console.log("Transaction Hash: ", hash);
 			})
@@ -63,14 +61,12 @@ async function callingSetHelper(req,fn){
 
 
 //this is for public functions
-initializer.setHelper = function (req, res){
+initializer.acceptHelperService = function (req, res){
     var gas = req.body.gas;	
     var contractAdd = req.body.contractAdd;	
     var legalOwner = req.body.legalOwner;
     var tokenId = req.body.tokenId;
-    var helper = req.body.helper;
-    var typeHelper = req.body.typeHelper;
-    var about = req.body.about;
+    var accept = req.body.accept;
 	var resul = {Result: "Success"};
 	var obj={body:
 			{
@@ -78,9 +74,7 @@ initializer.setHelper = function (req, res){
                 contractAdd:contractAdd,      
                 legalOwner : req.body.legalOwner,
                 tokenId : req.body.tokenId,
-                helper : req.body.helper,
-                typeHelper : req.body.typeHelper,
-                about : req.body.about            
+                accept : req.body.accept
 			}};
 		var errNum = errorControl.someFieldIsEmpty(obj);
 		if(errNum){  //				
@@ -90,7 +84,7 @@ initializer.setHelper = function (req, res){
 				Description : errorControl.errors(errNum)
 			}		
 		}else{
-			callingSetHelper(obj,function(resul){// this function is async
+			callingAcceptHelperService(obj,function(resul){// this function is async
 				res.send(resul); //because of that this line is required
 			});
 		}

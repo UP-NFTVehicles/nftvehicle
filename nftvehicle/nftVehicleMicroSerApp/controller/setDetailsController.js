@@ -100,7 +100,7 @@ initializer.setInsuranceDetails = function (req, res){
 }
 
 initializer.setMaintenanceDetails = function (req, res){
-    setDetails(req,"setMaintenanceDetails",res);
+    setDetails(req,"setMaintenanceService",res);
 }
 
 module.exports = initializer;
