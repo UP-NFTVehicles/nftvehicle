@@ -85,6 +85,9 @@ getRole = function(key){
 	var role="Not determined";
 	switch(key){
 		case "0x2CFcBB9Cf2910fBa7E7E7a8092aa1a40BC5BA341": role = "Manufacturer"; break;
+		case "0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e": role = "Manufacturer"; break;
+		case "0x32d680Aa90D45B677BBa0fFE9Af3d3578dcB4a83": role = "Manufacturer"; break;
+		case "0x207Ee448397059BA705629674b2F8c9Df1CA594b": role = "Manufacturer"; break;
 		default: role = "Not determined"; break; 
 	}
 	return role;
