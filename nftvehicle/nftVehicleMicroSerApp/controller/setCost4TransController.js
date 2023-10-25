@@ -2,98 +2,126 @@ var errorControl = require('./errors');
 var utilities = require('./utilities');
 var initializer = {};
 
-
-async function callingSetCost4Trans(req,fn){
-	console.log("OK");
+async function callingSetCost4Trans(req){	
 	contractABI = utilities.getContainFile(contractABIPath);	//contractABIPath is a global variable
 	contractByteCode = utilities.getContainFile(contractByteCodePath); //contractByteCodePath  is a global variable
 	contractByteCodeObj = contractByteCode.object;	
-	gas = req.body.gas; 
-	contractAdd=req.body.contractAdd;
-    transactionCost = req.body.transactionCost;
-    transactionType = req.body.transactionType;
-    tokenId = req.body.tokenId;
+	const gas = req.body.gas; 
+	const contractAdd=req.body.contractAdd;
+    const transactionCost = req.body.transactionCost;
+    const transactionType = req.body.transactionType;
+    const tokenId = req.body.tokenId;
     const government = req.body.government;
-	var Web3 = require('web3');
-	const web3 = new Web3(Web3.givenProvider || blockchainAddress);
+	var y="";
 	try {
-		await web3.eth.net.isListening();
-		console.log('Connected!');
-		userContract = new web3.eth.Contract(contractABI,contractAdd);
-        try {
-/***************************************/
-			userContract.methods.setCostForTheTransaction(transactionCost,tokenId,transactionType).send({from: government, gas:gas })
-			.on('transactionHash', function(hash){					
-				console.log("Transaction Hash: ", hash);
-			})
-			.on('receipt', function(receipt){
-				console.log("Transaction Receipt: ", receipt);
-				fn(receipt);
-			})
-			.on('confirmation', function(confirmationNumber, receipt){
-				console.log("Confirmation Number: ", confirmationNumber);
-			})
-			.on('error', function(error){
-				console.error(error);
-				fn(error);
-			});
-/***************************************/
-		} catch (error) {
-			console.log(error);
-            errNum = 4; 
-            resul = {
-                Result: "Error",
-                Num: errNum,
-                Description : errorControl.errors(errNum)
-            }		
-            fn(resul);          
-        }
-	} catch (e) {
-		console.log(e);
-		errNum = 2; //it is assigned in the /controller/errors.js
-		resul = {
-			Result: "Error",
-			Num: errNum,
-			Description : errorControl.errors(errNum)
-		}		
-		fn(resul);
+		const { Web3 } = require('web3');
+		//console.log("Entró1: " + from);
+		const ws = await utilities.connectToServer();
+		if(ws.Result==="Error") {
+			console.log("Error10");
+			throw new Error("9");			
+		}else{
+			console.log("Node is alive");
+		}
+		
+		await new Promise(async (resolve,reject) => {
+			try {
+				console.log("Entré promise");
+				const web3 = new Web3(Web3.givenProvider || blockchainAddress);
+				const userContract = new web3.eth.Contract(contractABI,contractAdd);
+				const contractAnswer = await userContract.methods.setCostForTheTransaction(transactionCost,tokenId,transactionType).send({from: government, gas:gas})
+						.on('receipt', function(receipt){
+							receipt["Result"] = "Success";
+							y = receipt;
+						}).on('error', function(error){
+							errNum = "7"; 
+							y = {
+								Result: "Error",
+								Num: errNum,
+								Description : errorControl.errors(errNum) + " " + error
+							}		
+							console.log("Error8:" + error);
+						});
+				web3.currentProvider.disconnect(); //after a request the connection must be closed
+				resolve(y);
+			}catch (error) {
+                    //console.log("Entre al error de conexión 10" + error);
+                    resul = {
+                        Result: "Error",                        
+                        from: government,
+						Num : "11",
+                        Description : error.message
+                    }           
+                    console.log("Error6");
+                    reject(resul);									
+			}
+			}).then((result) => {			
+				y = result;
+		  	})
+		  	.catch((error) => {
+				console.log("Error5");
+				y = error;
+		  	});
+		return y;
+	}catch (e) {
+		console.log("Error4");
+		throw new Error(e.message);
 	}
 }
 
 
+
 //this is for public functions
-initializer.setCost4Trans = function (req, res){
-    var gas = req.body.gas;	
-    var contractAdd = req.body.contractAdd;	
-    var transactionCost = req.body.transactionCost;	
-    var transactionType = req.body.transactionType;	    
-    var tokenId = req.body.tokenId;
-    var government = req.body.government;
-	var resul = {Result: "Success"};
-	var obj={body:
-			{
+initializer.setCost4Trans = async function (req, res){
+    const gas = req.body.gas; 
+    const contractAdd = req.body.contractAdd; 
+    const transactionCost = req.body.transactionCost; 
+    const transactionType = req.body.transactionType;     
+    const tokenId = req.body.tokenId;
+    const government = req.body.government;
+    var resul = {Result: "Success"};
+    var obj={body:
+            {
                 gas : req.body.gas, 
                 contractAdd:contractAdd,      
                 transactionCost:transactionCost,
                 transactionType:transactionType,
                 tokenId : tokenId,
                 government : government                                          
-			}};
-		var errNum = errorControl.someFieldIsEmpty(obj);
-		if(errNum){  //				
+            }};
+	const errNum = errorControl.someFieldIsEmpty(obj);
+	if(errNum){  //				
 			resul = {
 				Result: "Error",
-				Num: errNum,
+				Num: errNum.toString(),
 				Description : errorControl.errors(errNum)
-			}		
-		}else{
-			callingSetCost4Trans(obj,function(resul){// this function is async
-				res.send(resul); //because of that this line is required
-			});
-		}
-	if(resul.Result=="Error"){
-		res.send(resul);
+			}
+			res.send(resul);
+	}else{
+			try {
+				const response = await callingSetCost4Trans(obj).then((resul)=>{
+					//let resHE = errorControl.handlingErrorOrNot(resul,manufacturerAdd);
+					let resHE = JSON.parse(JSON.stringify(resul, utilities.replacer));					
+					return resHE;
+				}).catch((e)=>{
+					console.log("Error0");
+					y = {Result:e.message};
+					return y;
+				});
+				if(response.Result==="9"){
+					console.log("Error1");
+					throw new Error("9");
+				}else{
+					res.send(response);
+				}				
+			} catch (error) {
+				console.log("Error2"+ error.message);
+				y = errorControl.connectionError(error.message,government);
+				res.send(y); 
+			}
 	}
 }
+
+
 
 module.exports = initializer;

@@ -1,6 +1,6 @@
-# nftvehicle Microservice
+# API NFTVehicleM
 ## General description
-  This will contain all services offered by nftvehicle. Initially, it is a microservice containing all service of the nftvehicle. The main idea is to share a solution using a microservice architecture.
+  This will contain all services offered by NFT-Vehicle. Initially, it is an API microservice containing all service of the NFT-Vehicle. This offers a solution using a microservice architecture.
 
 ## Pre-requirements
   It is required create a network in docker as follows:
@@ -23,7 +23,11 @@
     * You must intro to the ubuntu instance and install npm:
       $ sudo apt install nodejs npm
     
-    * Then, go to the instance path:
+    * You must download the nftVehicleMicroservice from github:
+      https://github.com/UP-NFTVehicles/nftvehicle
+      set the downloaded files in <PATHL>
+
+    * Then, go to the ubuntu instance path:
       $ cd /nftvehicle
 
     * Then, Update npm:

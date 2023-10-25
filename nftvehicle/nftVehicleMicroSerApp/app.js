@@ -28,6 +28,7 @@ var app = express();
 global.blockchainAddress = "ws://172.18.1.2:8546";
 global.contractABIPath = "./nftVehicles/VehicleNFT.abi";
 global.contractByteCodePath = "./nftVehicles/VehicleNFT.bytecode";
+//global.pendingTx = [];
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
