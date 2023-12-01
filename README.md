@@ -1,7 +1,7 @@
-# Architecture for accessing the NFT-Vehicle
+# NFTVehicleM: Architecture for accessing the NFT-Vehicle
 ## General description
-  This is an architecture that will contain all services for accessing the NFT-Vehicle. This is a project containing two main parts:  
-  - An API-Gateway service; 
+  This is the source code of an architecture that will contain all services for accessing the NFT-Vehicle. This is a project containing mainly two parts:  
+  - An API-Gateway service, we have called NFTVehicleM; and 
   - A blockchain server access. This uses Ganache program (application part of Truffle Suite). 
 
 ## Folders
@@ -11,4 +11,4 @@
   - nftvehicle/
 
 ## Install
-  To install each part you must follow the instructions explained within each folder. We recommend firstly install Ganache.
+  To install each part you must follow the instructions explained within each folder. We recommend firstly go on ganache/ folder and install Ganache, then nftvehicle/.

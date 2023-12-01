@@ -1,6 +1,6 @@
 # API NFTVehicleM
 ## General description
-  This will contain all services offered by NFT-Vehicle. Initially, it is an API microservice containing all service of the NFT-Vehicle. This offers a solution using a microservice architecture.
+  NFTVehicleM contain all services offered by smart contract NFTVehicle. Initially, NFTVehicleM is an API microservice containing all service of the NFT-Vehicle. This offers a solution using a microservice architecture.
 
 ## Pre-requirements
   It is required create a network in docker as follows:
