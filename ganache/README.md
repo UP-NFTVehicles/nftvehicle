@@ -1,4 +1,4 @@
-# API NFTVehicleM
+# Blockchain instance for API NFTVehicleM
 ## General description
   This will install the blockchain instance, which will store the transactions of NFT-Vehicle. We have used Ganache application (part of the Truffle Suite). We have not modified anything of Ganache.
 
