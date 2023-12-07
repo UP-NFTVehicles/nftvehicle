@@ -20,3 +20,5 @@
 ## Example
   To consume the services provided by NFTVehicleM you can use Postman application (https://www.postman.com/). The following figure illustrate an example of sending the request for tokenizing a vehilce consuming the create service:
   ![](create.png)
+
+  You can see all services at https://auditblockchain.postman.co/workspace/NFTVehicles~74903020-71ed-4d7d-b8ca-f7d5b27c2c17/collection/9485273-ae05999d-a773-4094-8d18-896e37bb0891?action=share&creator=9485273 
