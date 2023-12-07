@@ -16,3 +16,7 @@
   1. Firstly install docker, a guide for that visit https://docs.docker.com/engine/install/
   2. Install Ganache: follow the instructions explained in file README.md within folder ganache/.
   3. Install NFTVehicleM, for that follow the instructions explained in file README.md within folder nftvehicle/.
+
+## Example
+  To consume the services provided by NFTVehicleM you can use Postman application (https://www.postman.com/). The following figure illustrate an example of sending the request for tokenizing a vehilce consuming the create service:
+  ![](create.png)
