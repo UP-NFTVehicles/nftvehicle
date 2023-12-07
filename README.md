@@ -11,4 +11,8 @@
   - nftvehicle/
 
 ## Install
-  To install each part you must follow the instructions explained within each folder. We recommend firstly go on ganache/ folder and install Ganache, then nftvehicle/.
+  To install each part execute the following instructions: 
+  
+  1. Firstly install docker, a guide for that visit https://docs.docker.com/engine/install/
+  2. Install Ganache: follow the instructions explained in file README.md within folder ganache/.
+  3. Install NFTVehicleM, for that follow the instructions explained in file README.md within folder nftvehicle/.
