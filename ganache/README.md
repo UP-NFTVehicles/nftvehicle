@@ -18,7 +18,7 @@
     * Download ubuntu image:
       $ docker pull ubuntu:23.10
     
-    * If you are running docker in MacOS, disable line 22 and enable line 25 in the Dockerfile found in PATHLBLOCKCHAIN
+    * If you are running docker in MacOS, disable line 22 and enable line 25 in the Dockerfile in PATHLBLOCKCHAIN
 
     * Build the ubuntu image in a repository:
       $ docker build -t ganacheimage  <PATHLBLOCKCHAIN>
