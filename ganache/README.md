@@ -6,28 +6,29 @@
   It is required to have created a network in docker as follows:
 
     $ docker network create --gateway 172.18.1.1 --subnet 172.18.1.0/24 nftvehicleNetwork
+  
+  To see the created network:    
+
+    $ docker network inspect nftvehicleNetwork
  
 ## Install process
   Using the Dockerfile located in this repository, execute the following steps:
 
-    * Download this repository in a path in your computer, so-called PATHL
+    * Download this repository in a path in your computer, so-called PATHLBLOCKCHAIN
     * Download ubuntu image:
-      $ docker pull ubuntu
+      $ docker pull ubuntu:23.10
     
     * Build the ubuntu image in a repository:
-      $ docker build -t ganacheimage  <PATHL>
+      $ docker build -t ganacheimage  <PATHLBLOCKCHAIN>
 
     * Run ubuntu: 
-      $ docker run -it --network nftvehicleNetwork -p 8546:8546 -v <PATHL>:/nftvehicle/ganache  ganacheimage
+      $ docker run -it --network nftvehicleNetwork -p 8546:8546 -v <PATHLBLOCKCHAIN>:/nftvehicle/ganache  ganacheimage
 
-    * You must intro to the ubuntu instance and install npm:
-      $ sudo apt install nodejs npm
-    
     * Then, go to the ubuntu instance path:
       $ cd /nftvehicle/ganache
 
-    * Then, Update npm:
-      $ npm update
-    
+    * Change permissions:
+      $ chmod 544 startApp
+
     * Execute the following command:
       $ ./startApp

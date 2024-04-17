@@ -1,15 +1,14 @@
-FROM ubuntu:22.10
+FROM ubuntu:23.10
 
-#Install curl
 RUN apt-get update
 RUN apt-get install sudo -y
 
 RUN apt-get upgrade -y
 
 RUN apt-get update 
-RUN apt-get install curl -y
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+#Install curl
+RUN apt-get install curl -y
 
 #Install node
 RUN apt-get install -y nodejs
@@ -18,8 +17,5 @@ RUN apt-get upgrade -y
 
 RUN apt-get update
 RUN apt-get install npm -y
-RUN npm install -g ganache-cli 
-#RUN npm audit fix
-#RUN export NODE_OPTIONS=--openssl-legacy-provider
-#RUN ganache-cli -h 172.18.1.2 -p 8546 --chainId 777 --account '0x8d83244aaafae28bb1dcc1cb14c109b4f4d68183108932a728d29b2523f9d5de,100000000000000000000' --account '0xf2bd803083098d621c94a0791463c7995e2eb2c305e85e631eff8927b6cddb5d,100000000000000000000' --account '0x668b28ce4a7afa560379ad32ec20b10f4f6dd3ba073b88ce2a739ab3b5e08ba9,100000000000000000000' --account '0x7c813e6d07515bc91945e31682ccc9c28d9f968dfbe0728592a4c928ad9bcb7c,100000000000000000000' --account '0x307f76ae84059eee755ac404e1a850c910de997b92c0677263bc4748c40c8d60,100000000000000000000' --account '0x6b00ae2e5548b3dbfb5e096552edce55889492fefe140f1960bd135dc4ca49fe,100000000000000000000' --account '0xf0b1c62cd9e281ef21c40ecf2f73d02e65b009d1fd66879c41e5caea836a4479,100000000000000000000' --account '0xd72cd7287f324e0932a8546d29c1849208728403db453f06b06f47176e558bb4,100000000000000000000' --account '0xfc73327d87fe0da456c4f9d7d05e3c34b27177f0fdc2cc26ca197b202b305450,100000000000000000000' --account '0x1109ae3c9fe7c75957aa097b7f1e549f093c43f23a69de418eb69a8700b79f0d,100000000000000000000' 
-
+RUN npm install ganache --global
+#RUN npm install -g ganache-cli 

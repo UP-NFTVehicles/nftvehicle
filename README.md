@@ -15,10 +15,11 @@
 ## Install
   To install each part execute the following instructions: 
   
-  1. Firstly install docker, a guide for that visit https://docs.docker.com/engine/install/
-  2. Install Ganache: follow the instructions explained in file README.md within folder ganache/.
-  3. Install NFTVehicleM, for that follow the instructions explained in file README.md within folder nftvehicle/.
-  4.- Install the simulator tool, for that follow the instructions explained in file README.md within folder NFTVehicles_simulator/. This part is not required to run NFTVehicleM, at least you can execute some testing proofs.
+  1. Firstly install docker, a guide for that visit https://docs.docker.com/engine/install/. We have proved with:
+    - Windows 10 Pro, 11th Gen Intel(R) Core(TM) i7-1165G7 @2.80GHz 1.69GHz, 32GB RAM, 64-bit, x64-based processor. 
+  2. Install Ganache: follow the instructions explained in file README.md within folder [ganache/](https://github.com/UP-NFTVehicles/nftvehicle/tree/main/ganache).
+  3. Install NFTVehicleM, for that follow the instructions explained in file README.md within folder [nftvehicle/](https://github.com/UP-NFTVehicles/nftvehicle/tree/main/nftvehicle).
+  4. Install the simulator tool, for that follow the instructions explained in file README.md within folder NFTVehicles_simulator/. This part is not required to run NFTVehicleM, at least you can execute some testing proofs.
 
 ## Example
   To consume the services provided by NFTVehicleM you can use Postman application (https://www.postman.com/). The following figure illustrates an example of tokenizing a vehicle by sending a request as you can see in the following image:

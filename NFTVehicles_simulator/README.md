@@ -4,17 +4,15 @@
 
 ## Pre-requirements
   It is required to install:
-    * Java 17.0.1 (or later)
-    * Apache Netbeans IDE 18 (or later)
-    * [Ganache] (https://github.com/UP-NFTVehicles/nftvehicle/tree/main/ganache)      
-    * [NFTVehicleM](https://github.com/UP-NFTVehicles/nftvehicle/tree/main/nftvehicle)
+  - Java 17.0.1 (or later)
+  - Apache Netbeans IDE 18 (or later)
+  - [Ganache](https://github.com/UP-NFTVehicles/nftvehicle/tree/main/ganache)      
+  - [NFTVehicleM](https://github.com/UP-NFTVehicles/nftvehicle/tree/main/nftvehicle)
 
  
 ## Install process
   Download repository simpleThread in a path in your computer, so-called PATHL:
 
-    * Open the repository locating PATHL using Apache Netbeans
-    
-    * Verify that Ganache and NFTVehicleM (on port 6000) are running
-    
-    * Execute the simulator
+  - Open the repository locating PATHL using Apache Netbeans
+  - Verify that Ganache and NFTVehicleM (on port 6000) are running
+  - Execute the simulator
