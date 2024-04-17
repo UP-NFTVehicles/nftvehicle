@@ -13,25 +13,17 @@
   - NFTVehicles_simulator/
 
 ## Install
-  To install each part execute the following instructions: 
-  
-  1. Firstly install docker, a guide for that visit [docker install](https://docs.docker.com/engine/install/). See the following table to check the platforms that have been installed succesfully:
+The following table illustrates the platforms where was already installed and proved succesfully:
 
-    | Operating System  |      Hardware characteristics         | Installed |
-    | ----------------- | ------------------------------------- | --------- |
-    | Windows 10 Pro    | 11th Gen Intel(R) Core(TM) i7-1165G7, |    Yes    |
-    |                   | @2.80GHz 1.69GHz, 32GB RAM, 64-bit,   |           |
-    |                   | x64-based processor                   |           |
-    | ----------------- | ------------------------------------- | --------- |
-    | Windows 10 Home   | AMD Ryzen 3 2300U with Radeon Vega    |    Yes    |
-    |                   | Mobile Gfx, 2000Mhz, 4CPUs AMI F.48   |           |
-    |                   | 12GB RAM, x64-based PC.               |           |
-    | ----------------- | ------------------------------------- | --------- |
-    | MACOS 14.4.1      | Intel Iris Plus Graphics 1536 MB      |    Yes    |
-    | (23E224)          | 1.2 GHz Quad-Core Intel Core i7       |           |
-    |                   | 16 GB 3733 MHz LPDDR4X                |           |
+Operating System     |      Hardware characteristics                                                                   | Installed 
+-----------------    | ------------------------------------                                                            | --------- 
+Windows 10 Pro       | 11th Gen Intel(R) Core(TM) i7-1165G7,  @2.80GHz 1.69GHz, 32GB RAM, 64-bit, x64-based processor. |   Yes
+Windows 10 Home      | AMD Ryzen 3 2300U with Radeon Vega, Mobile Gfx, 2000Mhz, 4CPUs AMI F.48, 12GB RAM, x64-based PC.|   Yes 
+MACOS 14.4.1 (23E224)| Intel Iris Plus Graphics 1536 MB, 1.2 GHz Quad-Core Intel Core i7,  16 GB 3733 MHz LPDDR4X      |   Yes    
 
-  
+To install each part execute the following instructions: 
+
+  1. Firstly install docker, a guide for that visit [docker install](https://docs.docker.com/engine/install/).   
   2. Install Ganache: follow the instructions explained in file README.md within folder [ganache/](https://github.com/UP-NFTVehicles/nftvehicle/tree/main/ganache).
   3. Install NFTVehicleM, for that follow the instructions explained in file README.md within folder [nftvehicle/](https://github.com/UP-NFTVehicles/nftvehicle/tree/main/nftvehicle).
   4. Install the simulator tool, for that follow the instructions explained in file README.md within folder NFTVehicles_simulator/. This part is not required to run NFTVehicleM, at least you can execute some testing proofs.
