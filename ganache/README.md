@@ -18,6 +18,8 @@
     * Download ubuntu image:
       $ docker pull ubuntu:23.10
     
+    * If you are running docker in MacOS, disable line 22 and enable line 25 in the Dockerfile found in PATHLBLOCKCHAIN
+
     * Build the ubuntu image in a repository:
       $ docker build -t ganacheimage  <PATHLBLOCKCHAIN>
 
@@ -26,6 +28,9 @@
 
     * Then, go to the ubuntu instance path:
       $ cd /nftvehicle/ganache
+
+    * Update npm:
+      $ npm update
 
     * Change permissions:
       $ chmod 544 startApp

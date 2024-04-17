@@ -25,10 +25,6 @@
     * Run ubuntu: 
       $ docker run -it --network nftvehicleNetwork -p 6000:6000 -v <PATHL>:/nftvehicle  nftvehicle
 
-    * You must download the nftVehicleMicroservice from github:
-    [github APINftVehicleM] (https://github.com/UP-NFTVehicles/nftvehicle)      
-      set the downloaded files in <PATHL>
-
     * Then, go to the ubuntu instance path:
       $ cd /nftvehicle/nftVehicleMicroSerApp
 

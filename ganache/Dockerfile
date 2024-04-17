@@ -17,5 +17,9 @@ RUN apt-get upgrade -y
 
 RUN apt-get update
 RUN apt-get install npm -y
+
+#Use the following in Windows OS
 RUN npm install ganache --global
+
+#Use the following in MAC OS intel cpu
 #RUN npm install -g ganache-cli 
