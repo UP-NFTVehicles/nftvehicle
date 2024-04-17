@@ -17,7 +17,6 @@
   
   1. Firstly install docker, a guide for that visit [docker install](https://docs.docker.com/engine/install/). See the following table to check the platforms that have been installed succesfully:
 
-    | ----------------- | ------------------------------------- | --------- |
     | Operating System  |      Hardware characteristics         | Installed |
     | ----------------- | ------------------------------------- | --------- |
     | Windows 10 Pro    | 11th Gen Intel(R) Core(TM) i7-1165G7, |    Yes    |
@@ -31,7 +30,7 @@
     | MACOS 14.4.1      | Intel Iris Plus Graphics 1536 MB      |    Yes    |
     | (23E224)          | 1.2 GHz Quad-Core Intel Core i7       |           |
     |                   | 16 GB 3733 MHz LPDDR4X                |           |
-    | ----------------- | ------------------------------------- | --------- |
+
   
   2. Install Ganache: follow the instructions explained in file README.md within folder [ganache/](https://github.com/UP-NFTVehicles/nftvehicle/tree/main/ganache).
   3. Install NFTVehicleM, for that follow the instructions explained in file README.md within folder [nftvehicle/](https://github.com/UP-NFTVehicles/nftvehicle/tree/main/nftvehicle).
