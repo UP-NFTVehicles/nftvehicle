@@ -1,0 +1,11 @@
+#### You must change the value of contractAdd, received after executing 01_create.txt
+
+curl --location 'http://localhost:6000/setHelper' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'gas=3000000' \
+--data-urlencode 'contractAdd=0xee84622fe7ef323422f3e34457697f7cba75badd' \
+--data-urlencode 'legalOwner=0x207Ee448397059BA705629674b2F8c9Df1CA594b' \
+--data-urlencode 'tokenId=1' \
+--data-urlencode 'helper=0x207Ee448397059BA705629674b2F8c9Df1CA594b' \
+--data-urlencode 'typeHelper=500' \
+--data-urlencode 'about=Agencia Mazda'

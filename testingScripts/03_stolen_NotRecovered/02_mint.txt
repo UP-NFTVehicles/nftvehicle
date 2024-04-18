@@ -1,0 +1,9 @@
+#### You must change the value of contractAdd, received after executing 01_create.txt
+
+curl --location 'httplocalhost:6000/mint' 
+--header 'Content-Type applicationx-www-form-urlencoded' 
+--data-urlencode 'gas=3600000' 
+--data-urlencode 'contractAdd=0xee84622fe7ef323422f3e34457697f7cba75badd' 
+--data-urlencode 'manufacturerAdd=0x207Ee448397059BA705629674b2F8c9Df1CA594b' 
+--data-urlencode 'governmentAdd=0x64D02158CbD8D1856440C14A1d5CFceBA80c804e' 
+--data-urlencode 'tokenId=1'

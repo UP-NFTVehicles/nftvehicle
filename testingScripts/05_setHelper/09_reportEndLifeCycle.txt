@@ -1,0 +1,9 @@
+#### You must change the value of contractAdd, received after executing 01_create.txt
+
+curl --location 'http://localhost:6000/report/EndLifeCycle' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'gas=3000000' \
+--data-urlencode 'contractAdd=0x36921a0088Fa4752FC0b441454A086E15a0F6cd1' \
+--data-urlencode 'legalOwner=0xa6ba79E509d7adb4594852E50D3e48BDcA15D07e' \
+--data-urlencode 'tokenId=1' \
+--data-urlencode 'description=It was stolen and not was found'

@@ -1,0 +1,8 @@
+curl --location 'http://localhost:6000/create' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'gas=3600000' \
+--data-urlencode 'name=CX5 Sport Edition' \
+--data-urlencode 'symbol=GMCX5' \
+--data-urlencode 'token=1FMADSFJL2432SDKFJA' \
+--data-urlencode 'data={'\''owrnername'\'':'\''UPGDL'\''; '\''colour'\'':'\''white'\''}' \
+--data-urlencode 'from=0x207Ee448397059BA705629674b2F8c9Df1CA594b'
