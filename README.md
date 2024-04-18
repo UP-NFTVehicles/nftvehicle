@@ -14,7 +14,7 @@
   - testingScripts/
 
 ## Install
-The next table illustrates the platforms where was already installed and tested succesfully the proofs:
+The next table illustrates the platforms that were already installed and tested the proofs successfully:
 
 Operating System     |      Hardware characteristics                                                                   | Installed 
 -----------------    | ------------------------------------                                                            | --------- 
